@@ -7,6 +7,7 @@ from feed import views
 urlpatterns = [
     path("", views.index, name="index"),
     path("profile/", views.profile, name="profile"),
+    path("editprofile/", views.editprofile, name="editprofile"),
 ]
 
 # for testing purposes only

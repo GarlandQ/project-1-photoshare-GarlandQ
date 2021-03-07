@@ -14,35 +14,34 @@ from users.forms import SignUpForm
 # Create your views here.
 @utils.anonymous_required
 def sign_up(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = SignUpForm(data=request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
 
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse("index"))
 
-        return render(request, 'users/signup.html', {'form': form})
+        return render(request, "users/signup.html", {"form": form})
 
-    return render(request, 'users/signup.html', {'form': SignUpForm()})
+    return render(request, "users/signup.html", {"form": SignUpForm()})
 
 
 @utils.anonymous_required
 def log_in(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
 
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse("index"))
 
-        return render(request, 'users/login.html', {'form': form})
+        return render(request, "users/login.html", {"form": form})
 
-
-    return render(request, 'users/login.html', {'form': AuthenticationForm()})
+    return render(request, "users/login.html", {"form": AuthenticationForm()})
 
 
 def log_out(request):
     logout(request)
-    return HttpResponseRedirect(reverse('login'))
+    return HttpResponseRedirect(reverse("login"))

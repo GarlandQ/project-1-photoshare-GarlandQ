@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title %}Edit Profile{% endblock %} {% block body %}
+<div class='container mt-5 mx-auto text-center'>
+	<img class='img-thumbnail' alt='user-pic' src='{{ user.profile.pfp.url }}'>
+    <p class='mt-2 mb-2'>{{ user.username }}</p>
+    <p class='mt-2'>{{ user.profile.bio }}</p>
+    
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Edit Profile</legend>
+            {{ u_form|crispy }}
+            {{ p_form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Update</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
