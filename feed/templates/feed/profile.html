@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<div>
+    {% if user.is_authenticated}
+    <img src="{{user.pfp.url}}" width="100" height="100" />
+    {{user.username}}
+    {{user.gender}}
+    {{user.bio}}
+</div>
+
+{% endblock %}
