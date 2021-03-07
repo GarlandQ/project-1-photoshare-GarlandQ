@@ -9,6 +9,5 @@ def index(request):
 
 
 @login_required
-def profile(request, username):
-    user = User.objects.get(username=username)
-    return render(request, 'feed/profile.html', {'user': user})
+def profile(request):
+    return render(request, 'feed/profile.html')
