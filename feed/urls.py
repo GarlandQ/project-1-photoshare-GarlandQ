@@ -7,8 +7,8 @@ from .views import (
     PostCreateView,
     PostUpdateView,
     PostDeleteView,
+    UserPostListView,
 )
-
 from feed import views
 
 urlpatterns = [
@@ -19,6 +19,7 @@ urlpatterns = [
     path("post/<int:pk>/delete/", PostDeleteView.as_view(), name="post-delete"),
     path("post/new/", PostCreateView.as_view(), name="post-create"),
     path("profile/", views.profile, name="profile"),
+    path("profile/<str:username>/", UserPostListView.as_view(), name="user-posts"),
     path("editprofile/", views.editprofile, name="editprofile"),
 ]
 

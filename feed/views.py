@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import User, Post
+from .models import Profile, Post
 from users.forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.views.generic import (
     ListView,
     DetailView,
@@ -24,6 +25,7 @@ class PostListView(LoginRequiredMixin, ListView):
     template_name = "feed/index.html"
     context_object_name = "posts"
     ordering = ["-date_posted"]
+    paginate_by = 5
 
 
 class PostDetailView(LoginRequiredMixin, DetailView):
@@ -65,6 +67,17 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
+
+
+class UserPostListView(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = "feed/user_posts.html"
+    context_object_name = "posts"
+    paginate_by = 5
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get("username"))
+        return Post.objects.filter(author=user).order_by("-date_posted")
 
 
 @login_required
