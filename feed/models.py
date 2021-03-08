@@ -20,7 +20,7 @@ class Profile(models.Model):
         super().save(*args, **kwargs)
 
         img = Image.open(self.pfp.path)
-        if img.height > 1000 or img.width > 1000:
+        if img.height > 300 or img.width > 300:
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.pfp.path)
@@ -41,6 +41,16 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("post-detail", kwargs={"pk": self.pk})
+
+    # Function to adjust image for page itself
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.pfp.path)
+        if img.height > 800 or img.width > 800:
+            output_size = (800, 800)
+            img.thumbnail(output_size)
+            img.save(self.pfp.path)
 
 
 class Comments(models.Model):

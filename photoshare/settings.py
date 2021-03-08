@@ -133,7 +133,7 @@ MEDIA_URL = "/media/"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 # Login url to be redirected to if not authenticated
-LOGIN_URL = "/login"
+LOGIN_URL = "/login/"
 
 # url to be redirected to if you are logged in
 LOGIN_REDIRECT_URL = "/"

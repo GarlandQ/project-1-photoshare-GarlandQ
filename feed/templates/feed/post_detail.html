@@ -2,13 +2,13 @@
 {% block title %}Post Details{% endblock %}
 {% block body %}
 <article class="media content-section">
-	<img class="img-responsive" src="{{ object.author.profile.image.url }}">
+	<img class="article-img" src="{{ object.author.profile.pfp.url }}">
 	<div class="media-body text-center">
 		<div class="article-metadata">
 			<a class="mr-2" href="#">{{ object.author }}</a>
-			<small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+			<small class="text-muted">{{ object.date_posted|date:"F d, Y g:i a" }}</small>
 		</div>
-		<img class="img-thumbnail" alt="user-pic" src="{{ object.image }}" />
+		<img class="img-thumbnail" alt="user-pic" src="{{ object.image.url }}" />
 		<p class="article-content">{{ object.description }}</p>
 		{% if object.author == user %}
 		<div>

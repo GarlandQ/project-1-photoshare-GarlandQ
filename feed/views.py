@@ -19,14 +19,14 @@ def index(request):
     return render(request, "feed/index.html", context)
 
 
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = "feed/index.html"
     context_object_name = "posts"
     ordering = ["-date_posted"]
 
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
 
 
