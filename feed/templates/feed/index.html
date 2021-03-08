@@ -1,10 +1,19 @@
-{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block body %}
-<div class="container">
-	<figure class="text-center mt-5">
-		<blockquote class="blockquote">
-			<p>The world is but a canvas to our imagination</p>
-		</blockquote>
-		<figcaption class="blockquote-footer">Henry David Thoreau</figcaption>
-	</figure>
-</div>
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+{% for post in posts %}
+<article class="media content-section">
+	<img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" />
+	<div class="media-body">
+		<div class="article-metadata">
+			<a class="mr-2" href="#">{{ post.author }}</a>
+			<small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+		</div>
+		<h2>
+			<a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.image }}</a>
+		</h2>
+		<p class="article-content">{{ post.description }}</p>
+	</div>
+</article>
+{% endfor %}
 {% endblock %}
