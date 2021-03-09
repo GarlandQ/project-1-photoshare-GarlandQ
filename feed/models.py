@@ -45,15 +45,14 @@ class Post(models.Model):
 
 class Comments(models.Model):
     # user's comment
-    usersComment = models.TextField()
+    content = models.TextField()
     # comment's original post. if user gets deleted, delete the comment as well.
-    commentsPost = models.ForeignKey(Post, on_delete=models.CASCADE)
+    commentPost = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name="comments"
+    )
     # comment's user
-    commentsUser = models.ForeignKey(User, on_delete=models.CASCADE)
-    commentsDate = models.DateTimeField(default=timezone.now)
+    commentOwner = models.ForeignKey(User, on_delete=models.CASCADE)
+    commentDate = models.DateTimeField(default=timezone.now)
 
-    # class Meta:
-    #     ordering = ["created_on"]
-
-    # def __str__(self):
-    #     return "Comment {} by {}".format(self.body, self.name)
+    def __str__(self):
+        return "Comment {} by {}".format(self.content, self.commentOwner)

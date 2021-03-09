@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Post, Comments
 from users.forms import UserUpdateForm, ProfileUpdateForm
+from .forms import CommentForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.views.generic import (
@@ -12,6 +13,7 @@ from django.views.generic import (
     DeleteView,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.urls import reverse, reverse_lazy
 
 # Home page with posts
 @login_required
@@ -110,3 +112,15 @@ def editprofile(request):
     context = {"u_form": u_form, "p_form": p_form}
 
     return render(request, "feed/editprofile.html", context)
+
+
+class AddCommentView(LoginRequiredMixin, CreateView):
+    model = Comments
+    form_class = CommentForm
+    template_name = "feed/comments_form.html"
+    # fields = ["content"]
+    success_url = reverse_lazy("post-detail")
+
+    def form_valid(self, form):
+        form.instance.commentOwner = self.request.user
+        return super().form_valid(form)
