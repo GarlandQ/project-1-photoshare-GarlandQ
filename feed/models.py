@@ -51,3 +51,9 @@ class Comments(models.Model):
     # comment's user
     commentsUser = models.ForeignKey(User, on_delete=models.CASCADE)
     commentsDate = models.DateTimeField(default=timezone.now)
+
+    # class Meta:
+    #     ordering = ["created_on"]
+
+    # def __str__(self):
+    #     return "Comment {} by {}".format(self.body, self.name)

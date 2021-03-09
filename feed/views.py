@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Post
+from .models import Profile, Post, Comments
 from users.forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -71,7 +71,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class UserPostListView(LoginRequiredMixin, ListView):
     model = Post
-    template_name = "feed/user_posts.html"
+    template_name = "feed/user_profile.html"
     context_object_name = "posts"
     paginate_by = 5
 
@@ -79,10 +79,16 @@ class UserPostListView(LoginRequiredMixin, ListView):
         user = get_object_or_404(User, username=self.kwargs.get("username"))
         return Post.objects.filter(author=user).order_by("-date_posted")
 
+    def get_context_data(self, **kwargs):
+        context = super(UserPostListView, self).get_context_data(**kwargs)
+        context["user"] = get_object_or_404(User, username=self.kwargs.get("username"))
+        context["Users_Profile"] = Profile.objects.all()
+        return context
 
-@login_required
-def profile(request):
-    return render(request, "feed/profile.html")
+
+# @login_required
+# def profile(request):
+#     return render(request, "feed/profile.html")
 
 
 @login_required
@@ -95,7 +101,7 @@ def editprofile(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            return redirect("profile")
+            return redirect("user-profile", username=request.user.username)
 
     else:
         u_form = UserUpdateForm(instance=request.user)

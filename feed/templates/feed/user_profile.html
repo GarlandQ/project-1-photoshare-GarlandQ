@@ -1,13 +1,15 @@
 {% extends "base.html" %}
-{% block title %}User Page{% endblock %}
+{% block title %}Profile - {{ view.kwargs.username }}{% endblock %}
 {% block body %}
 
 <div class="container mt-5 mx-auto text-center">
-    <img class="img-thumbnail" alt="user-pic" src="{{ user.profile.pfp.url }}" />
-    <p class="mt-2 mb-5">{{ user.username }}</p>
+    <img class="img-thumbnail" alt="user-profile-pic" src="{{ user.profile.pfp.url }}" />
+    <p class="mt-2 mb-5">{{ view.kwargs.username }}</p>
     <h2>About Me</h2>
     <p class="mt-2">{{ user.profile.bio }}</p>
+    {% if user.profile.user == request.user %}
     <a href="/editprofile/" class="btn btn-primary">Edit Profile</a>
+    {% endif %}
 </div>
 
 <h3 class="mb-3 mt-5 text-center">{{ view.kwargs.username }}'s Posts</h3>
@@ -15,7 +17,7 @@
 <div class="container card text-center mb-4 mt-2">
     <div class="mt-3 post-item">
         <div class="mb-3 mx-auto" style="max-width: 50%;">
-            <a class="mb-1 d-flex align-items-center m-2" href="{% url 'user-posts' post.author.username %}">
+            <a class="mb-1 d-flex align-items-center m-2" href="{% url 'user-profile' post.author.username %}">
                 <img class="rounded-circle img-container mr-2" src="{{ post.author.profile.pfp.url }}"
                     style="width:100%; max-width:50px; height: 100%; max-height:50px" />
                 {{post.author}}
