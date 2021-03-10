@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Post, Comments
+from .models import Profile, Post, Comment
 from users.forms import UserUpdateForm, ProfileUpdateForm
 from .forms import CommentForm
 from django.contrib import messages
@@ -13,7 +13,7 @@ from django.views.generic import (
     DeleteView,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 
 # Home page with posts
 @login_required
@@ -32,6 +32,26 @@ class PostListView(LoginRequiredMixin, ListView):
 
 class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+
+        comments_connected = Comment.objects.filter(post=self.get_object()).order_by(
+            "-created_date"
+        )
+        data["comments"] = comments_connected
+        data["comment_form"] = CommentForm(instance=self.request.user)
+
+        return data
+
+    def post(self, request, *args, **kwargs):
+        new_comment = Comment(
+            content=request.POST.get("content"),
+            owner=self.request.user,
+            post=self.get_object(),
+        )
+        new_comment.save()
+        return self.get(self, request, *args, **kwargs)
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -114,13 +134,22 @@ def editprofile(request):
     return render(request, "feed/editprofile.html", context)
 
 
-class AddCommentView(LoginRequiredMixin, CreateView):
-    model = Comments
-    form_class = CommentForm
-    template_name = "feed/comments_form.html"
-    # fields = ["content"]
-    success_url = reverse_lazy("post-detail")
+# class CommentListView(LoginRequiredMixin, ListView):
+#     model = Comment
+#     template_name = "feed/post_detail.html"
+#     context_object_name = "comments"
 
-    def form_valid(self, form):
-        form.instance.commentOwner = self.request.user
-        return super().form_valid(form)
+
+# class CommentDetailView(LoginRequiredMixin, DetailView):
+#     model = Comment
+
+
+# class CommentCreateView(LoginRequiredMixin, CreateView):
+#     model = Comment
+#     fields = ["content"]
+
+#     def form_valid(self, form):
+#         # post = get_object_or_404(Post, pk=id) # Uncommenting this line gives error: Field 'id' expected a number but got <built-in function id>.
+#         form.instance.owner = self.request.user
+#         # form.instance.post = post
+#         return super().form_valid(form)

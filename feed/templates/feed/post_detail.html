@@ -17,20 +17,45 @@
 		</div>
 		{% endif %}
 
-		<h1 class="mt-4">Comments</h1>
-		<a href="{% url 'add-comment' object.id%}">Add Comment</a>
-		<br />
-		{% if not post.comments.all %}
-		No Comments... Be the first to comment!
+		<!-- COMMENTS  -->
+		<h2>Leave your comment!</h2>
+		<div id="comments_section">
 
-		{% else %}
-		{% for comment in post.commentpost.all %}
-		<strong>{{ comment.owner }} - {{ comment.commentdate }}</strong>
-		<br />
-		{{ comment.usercomment }}
-		{% endfor %}
+			{% if user.is_authenticated %}
+			<form method="POST">
+				{% csrf_token %}
+				<div class="form-group">
+					{{ comment_form }}
+					<button class="btn btn-info" type="submit">Add comment <i class="fas fa-comments"></i></button>
+				</div>
+			</form>
+			{% endif %}
 
-		{% endif %}
+			{% if comments %}
+			<strong class="text-secondary">{{ object.number_of_comments }}
+				Comment{{ object.number_of_comments|pluralize }}</strong>
+			<hr>
+			<ul>
+				{% for comment in comments %}
+				<li>
+					<div>
+						<span>
+							<strong class="text-info">{{ comment.owner }} </strong>
+							<small class="text-muted">{{ comment.created_date }}</small>
+						</span>
+						<p>
+							{{ comment.content|safe }}
+						</p>
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
+			{% else %}
+			<strong class="text-secondary">No comments yet...</strong>
+			{% endif %}
+
+		</div>
+
 	</div>
 </article>
 {% endblock %}

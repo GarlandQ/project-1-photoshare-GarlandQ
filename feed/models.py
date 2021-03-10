@@ -42,17 +42,22 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("post-detail", kwargs={"pk": self.pk})
 
+    @property
+    def number_of_comments(self):
+        return Comment.objects.filter(post=self).count()
 
-class Comments(models.Model):
+
+class Comment(models.Model):
     # user's comment
-    content = models.TextField()
+    content = models.TextField(max_length=100)
     # comment's original post. if user gets deleted, delete the comment as well.
-    commentPost = models.ForeignKey(
-        Post, on_delete=models.CASCADE, related_name="comments"
-    )
+    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     # comment's user
-    commentOwner = models.ForeignKey(User, on_delete=models.CASCADE)
-    commentDate = models.DateTimeField(default=timezone.now)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return "Comment {} by {}".format(self.content, self.commentOwner)
+        return "Comment {} by {}".format(self.content, self.owner)
+
+    def get_absolute_url(Post):
+        return reverse("post-detail", kwargs={"pk": Post.pk})
