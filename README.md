@@ -2,7 +2,7 @@
 # Project 1 | **PhotoShare**
 
 **PhotoShare** - A simple PhotoSharing Application
-Time spent: **XX** hours spent in total
+Time spent: **48+** hours spent in total
 
 ## User Stories
 
@@ -42,7 +42,9 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+*Describe any challenges encountered while building the app.*
+The challenges while building the app was mainly to understand Django's built in functionalities and how Django works overall. It was mainly reading the documentation on certain functionalities that took the most time and some of the time was spent on experiementing those Django functionalities. Overall, Django has many features and functionality that I used throughout the app and it made it very easy to not focus on implementing from scratch, but rather using Django's features to build the app. 
+
 
 ## License
 
