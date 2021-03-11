@@ -28,9 +28,9 @@ The following **optional** features are implemented:
 - [ ] A user can reset their password if they forgot (will likely require adding email to sign up)
 
 ## TESTING
-Code Coverage: [insert_coverage_here]
+Code Coverage: 38%
 
-A coverage report is included at: [insert coverage report path]
+A coverage report is included at: [Here](https://github.com/notabela-org/project-1-photoshare-GarlandQ/tree/master/coverage_result)
 
 ## Video Walkthrough
 
