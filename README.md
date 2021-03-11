@@ -36,7 +36,9 @@ A coverage report is included at: [Here](https://github.com/notabela-org/project
 
 Here's a walkthrough of implemented user stories:
 
-<img src='[insert_gif_source_here]' title='Video Walkthrough' alt='Video Walkthrough' />
+<img src='https://github.com/notabela-org/project-1-photoshare-GarlandQ/blob/master/photoshareapp.gif' title='Video Walkthrough' alt='Video Walkthrough' />
+
+![](photoshareapp.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
