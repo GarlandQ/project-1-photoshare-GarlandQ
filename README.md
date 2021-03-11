@@ -38,8 +38,6 @@ Here's a walkthrough of implemented user stories:
 
 <img src='https://github.com/notabela-org/project-1-photoshare-GarlandQ/blob/master/photoshareapp.gif' title='Video Walkthrough' alt='Video Walkthrough' />
 
-![](photoshareapp.gif)
-
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
