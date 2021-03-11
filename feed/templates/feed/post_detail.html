@@ -2,13 +2,15 @@
 {% block title %}Post Details{% endblock %}
 {% block body %}
 <article class="media content-section">
-	<img class="article-img" src="{{ object.author.profile.pfp.url }}">
 	<div class="media-body text-center">
-		<div class="article-metadata">
+		<div class="article-metadata mt-3 mb-3">
+			<img class="rounded-circle img-container mr-2" src="{{ post.author.profile.pfp.url }}"
+				style="width:100%; max-width:50px; height: 100%; max-height:50px" />
 			<a class="mr-2" href="{% url 'user-profile' object.author.username %}">{{ object.author }}</a>
 			<small class="text-muted">{{ object.date_posted|date:"F d, Y g:i a" }}</small>
 		</div>
-		<img class="img-thumbnail" alt="user-pic" src="{{ object.image.url }}" />
+		<img class="img-thumbnail" alt="user-pic" src="{{ object.image.url }}"
+			style="width:100%; max-width:500px; height: 100%; max-height:500px" />
 		<p class="article-content">{{ object.description }}</p>
 		{% if object.author == user %}
 		<div>
@@ -18,15 +20,17 @@
 		{% endif %}
 
 		<!-- COMMENTS  -->
+		</br>
 		<h2>Leave your comment!</h2>
 		<div id="comments_section">
 
 			{% if user.is_authenticated %}
 			<form method="POST">
 				{% csrf_token %}
-				<div class="form-group">
+				<div class="col-md-auto">
 					{{ comment_form }}
-					<button class="btn btn-info" type="submit">Add comment <i class="fas fa-comments"></i></button>
+					<button class="btn btn-info mt-2 mb-5" type="submit">Add Comment <i
+							class="fas fa-comments"></i></button>
 				</div>
 			</form>
 			{% endif %}
@@ -35,12 +39,16 @@
 			<strong class="text-secondary">{{ object.number_of_comments }}
 				Comment{{ object.number_of_comments|pluralize }}</strong>
 			<hr>
-			<ul>
+			<ul style="list-style-type: none">
 				{% for comment in comments %}
 				<li>
 					<div>
 						<span>
-							<strong class="text-info">{{ comment.owner }} </strong>
+							<a href="{% url 'user-profile' comment.owner.username %}">
+								<img class="rounded-circle img-container mr-2" src="{{ comment.owner.profile.pfp.url }}"
+									style="width:100%; max-width:50px; height: 100%; max-height:50px" />
+								<strong class="text-info">{{ comment.owner }} </strong>
+							</a>
 							<small class="text-muted">{{ comment.created_date }}</small>
 						</span>
 						<p>
@@ -51,7 +59,7 @@
 				{% endfor %}
 			</ul>
 			{% else %}
-			<strong class="text-secondary">No comments yet...</strong>
+			<strong class="text-secondary">No comments yet... Be the first to add one!</strong>
 			{% endif %}
 
 		</div>

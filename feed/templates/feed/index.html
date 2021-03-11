@@ -22,6 +22,8 @@
 		</div>
 		<div class="card-body">
 			<p class="article-content">{{ post.description }}</p>
+			<a class="mb-1 text-center m-2" href="{% url 'post-detail' post.id %}">{{ post.number_of_comments }}
+				Comments</a>
 		</div>
 	</div>
 </div>

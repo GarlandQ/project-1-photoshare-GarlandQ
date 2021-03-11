@@ -49,7 +49,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     # user's comment
-    content = models.TextField(max_length=100)
+    content = models.TextField()
     # comment's original post. if user gets deleted, delete the comment as well.
     post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     # comment's user
