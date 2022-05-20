@@ -22,12 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "38nh!#9l=$+k$i6dqz$44js+b(osw*9#!y6*z$tgelfy3wj844"
+# SECRET_KEY = "38nh!#9l=$+k$i6dqz$44js+b(osw*9#!y6*z$tgelfy3wj844"
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["photoshare-app-clone.herokuapp.com", "127.0.0.1"]
 
 
 # Application definition
@@ -45,7 +46,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
+    #"django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -122,6 +124,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "photoshare/static",
@@ -139,6 +142,5 @@ LOGIN_URL = "/login/"
 # url to be redirected to if you are logged in
 LOGIN_REDIRECT_URL = "/"
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 django_heroku.settings(locals())
